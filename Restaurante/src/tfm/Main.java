@@ -13,27 +13,28 @@ public class Main {
 		System.out.println("Inicio");
 
 		ConexionSQL conexionSQL = new ConexionSQL();
-		conexionSQL.conectar();
-		double[][] matriz = conexionSQL.getMATRIZ();
-		Algoritmo algoritmo = new Algoritmo(matriz, conexionSQL.getFILAS(),
-				conexionSQL.getCOLUMNAS());
+		// conexionSQL.conectar();
+		// double[][] matriz = conexionSQL.getMATRIZ();
+		// Algoritmo algoritmo = new Algoritmo(matriz, conexionSQL.getFILAS(),
+		// conexionSQL.getCOLUMNAS());
 
-		// double[][] matriz = matrizPrueba;
-		// AlgoritmoObj2 algoritmo = new AlgoritmoObj2(matriz, 6, 12);
+		/**
+		 * Si se quiere realizar la prueba utilizando otra matriz de entrada
+		 * modificar las dos siguientes lineas
+		 */
+		double[][] matriz = Algoritmo.matrizPrueba;
+		Algoritmo algoritmo = new Algoritmo(matriz, 6, 12);
+
 		System.out.println("-------------------");
 		algoritmo.crearMatrizItemsComunesEntreUsuarios();
 		algoritmo.calculoMSD();
 		algoritmo.crearListaCompatibilidadOrdenada();
-		// algoritmo.pintarListaCompatibilidadOrdenada();
 
+		// cantidad de usarios con los que se quiere estimar
 		int u = Algoritmo.FILAS - 1;
-		algoritmo.construirMatrizEstimacionVotos(u);// cantidad de usarios con
-													// los que se quiere estimar
-		// System.out.println("MATRIZ DE ESTIMACION!---------------------------------");
-		// algoritmo.pintarMatrizEstimacion();
-		// System.out.println("MATRIZ DE ESTIMACION ORDENADA!---------------------------------");
+		algoritmo.construirMatrizEstimacionVotos(u);
+		
 		algoritmo.construirMatrizEstimacionOrdenada();
-		// algoritmo.pintarMatrizEstimacionOrdenada();
 
 		menu(algoritmo, conexionSQL);
 
