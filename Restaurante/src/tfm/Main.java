@@ -21,7 +21,7 @@ public class Main {
 //		double[][] matriz = matrizPrueba;
 //    	AlgoritmoObj2 algoritmo = new AlgoritmoObj2(matriz, 6, 12);
     	System.out.println("-------------------");
-		algoritmo.obtencionDeItemsVotadosPorAmbosUsuarios();
+		algoritmo.crearMatrizItemsComunesEntreUsuarios();
 		algoritmo.calculoMSD();
 		algoritmo.crearListaCompatibilidadOrdenada();
 		//algoritmo.pintarListaCompatibilidadOrdenada();
