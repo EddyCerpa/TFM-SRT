@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="tfm.AlgoritmoObj2" project="Restaurante" 
-    file="/Restaurante/src/tfm/AlgoritmoObj2.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="tfm.Algoritmo" project="Restaurante" file="/Restaurante/src/tfm/Algoritmo.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="299" y="283"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="tfm.AlgoritmoObj2.PorcentajeSimilitud" project="Restaurante" 
-    file="/Restaurante/src/tfm/AlgoritmoObj2.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="tfm.Algoritmo.PorcentajeSimilitud" project="Restaurante" 
+    file="/Restaurante/src/tfm/Algoritmo.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="731" y="237"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -31,8 +31,12 @@
   <association id="4">    
     <bendpoint x="550" y="216"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="5" name="matrizEstimacionOrdenada"/>      
-      <multiplicity id="6" minimum="0" maximum="2147483647"/>    
+      <attribute id="5" name="matrizEstimacionOrdenada">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="6" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
@@ -44,8 +48,12 @@
   <association id="8">    
     <bendpoint x="614" y="319"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="9" name="usuariosSimilaresOrdenados"/>      
-      <multiplicity id="10" minimum="0" maximum="2147483647"/>    
+      <attribute id="9" name="usuariosSimilaresOrdenados">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="10" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

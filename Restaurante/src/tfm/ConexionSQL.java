@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import tfm.AlgoritmoObj2.PorcentajeSimilitud;
+import tfm.Algoritmo.PorcentajeSimilitud;
 
 public class ConexionSQL {
 	 
@@ -161,18 +161,13 @@ public class ConexionSQL {
 
             resultado = sentencia.executeQuery(consultaSQL);
             while (resultado.next()) {
-            	FILAS = resultado.getInt("N"); 
-               // String id = resultado.getString("ID_TIPO_VALORACION");
-//                int nombres = resultado.getInt("CANTIDAD_OPINIONES");
-//                int apellidos = resultado.getInt("NIVEL");
-//              System.out.println( " " /*+ nombres + " " + apellidos*/ + FILAS);
+            	FILAS = resultado.getInt("N");
             }
             
             consultaSQL = "SELECT count (*) as N FROM  items";
             resultado = sentencia.executeQuery(consultaSQL);
             while (resultado.next()) {
-            	COLUMNAS = resultado.getInt("N"); 
-//            	 System.out.println(COLUMNAS);
+            	COLUMNAS = resultado.getInt("N");
             }
             
             MATRIZ= new double[FILAS][COLUMNAS];
@@ -184,7 +179,6 @@ public class ConexionSQL {
             	 COLUMNAS = resultado.getInt("ITEM");
             	 double puntuacion = resultado.getInt("PUNTUACION_GENERAL");
             	 MATRIZ [FILAS][COLUMNAS]= puntuacion;
-//            	 System.out.println(FILAS + " "+ COLUMNAS+ " " + puntuacion);
             }
             
         } catch (Exception e) {

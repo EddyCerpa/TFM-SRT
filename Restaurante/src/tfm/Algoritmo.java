@@ -1,131 +1,42 @@
 package tfm;
 
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
-public class AlgoritmoObj2 {
+public class Algoritmo {
 
 	private double   [][] matriz;
-	private  ArrayList<Integer>[][] matrizItemsComunes; //= new ArrayList[FILAS][FILAS];
-	private double matrizMSD[][] ;//= new double [FILAS][FILAS];
-	public ArrayList<PorcentajeSimilitud []> usuariosSimilaresOrdenados;// = new ArrayList();
-	
+	private  ArrayList<Integer>[][] matrizItemsComunes;
+	private double matrizMSD[][] ;
+	public ArrayList<PorcentajeSimilitud []> usuariosSimilaresOrdenados;
 	double matrizEstimacion [][];
 	ArrayList<PorcentajeSimilitud []> matrizEstimacionOrdenada;
 	
 	static int FILAS = 6;
 	static int COLUMNAS = 12;
-//	public static double[][] matrizPrueba = {
-//		{1,2,-1,-1,2,-1,3,4,-1,4,1,-1},
-//		{-1,-1,1,5,-1,5,3,1,-1,5,2,1},
-//		{1,-1,-1,2,-1,1,-1,3,4,-1,-1,-1},
-//		{-1,1,4,4,-1,-1,3,-1,5,4,-1,1},
-//		{2,-1,5,-1,1,-1,1,-1,-1,-1,2,1},
-//		{-1,-1,5,2,1,-1,-1,4,-1,1,-1,2}};
-	
+
 	public static double[][] matrizPrueba = {
 			{2,3,-1,-1,1,-1,5,1,-1,4,1,-1},
 			{2,-1,3,5,-1,2,4,-1,5,2,3,-1},
 			{1,3,-1,5,-1,4,-1,2,-1,-1,-1,-1},
 			{3,-1,2,3,-1,-1,1,-1,5,3,-1,1},
 			{1,1,5,1,1,3,4,5,3,1,2,1},
-			{-1,2,3,1,-1,3,-1,2,-1,4,-1,5}};
+			{-1,2,3,1,-1,3,-1,2,-1,4,-1,5}
+	};
 	
 	
 	
 	
-	public static void main(String[] args) throws FileNotFoundException {
-		System.out.println("Inicio");
-		
-		
-//		PrintStream fichero = new PrintStream(new File("M:\\fichero.txt"));
-//		System.setOut(fichero);
-		
-		
-    	ConexionSQL conexionSQL = new ConexionSQL();
-    	conexionSQL.conectar();
-    	double[][]matriz = conexionSQL.getMATRIZ();
-		AlgoritmoObj2 algoritmo = new AlgoritmoObj2(matriz, conexionSQL.getFILAS(), conexionSQL.getCOLUMNAS()) ;
-		
-//		for (int i = 0; i < COLUMNAS; i++) {
-//			System.out.println(matriz[1][i]);
-//		}
-		
-//		double[][] matriz = matrizPrueba;
-//    	AlgoritmoObj2 algoritmo = new AlgoritmoObj2(matriz, 6, 12);
-    	System.out.println("-------------------");
-		algoritmo.obtencionDeItemsVotadosPorAmbosUsuarios();
-		algoritmo.calculoMSD();
-		algoritmo.crearListaCompatibilidadOrdenada();
-		//algoritmo.pintarListaCompatibilidadOrdenada();
-		
-		int u = FILAS-1;
-		algoritmo.construirMatrizEstimacionVotos(u);//cantidad de usarios con los que se quiere estimar 
-//		System.out.println("MATRIZ DE ESTIMACION!---------------------------------");
-		//algoritmo.pintarMatrizEstimacion();
-		//System.out.println("MATRIZ DE ESTIMACION ORDENADA!---------------------------------");
-		algoritmo.construirMatrizEstimacionOrdenada();
-		//algoritmo.pintarMatrizEstimacionOrdenada();
-		
-		menu(algoritmo, conexionSQL);
-		
-	}
-	
-
-
-	private static void menu(AlgoritmoObj2 algoritmo, ConexionSQL conexionSQL) {
-
-		
-		int usuario = seleccionaOpcion("Introduce un usuario n [ 0, 1, 2,..., " + FILAS + " como máximo]", "Intenta introducir un número");
-		int ususariosCompatibles = seleccionaOpcion("Introduce la cantidad de usuarios compatibles que quiere ver [ " + FILAS + " como máximo]", "Intenta introducir un número");
-		
-		/***/
-		
-		/***/
-		System.out.println("El Usuario " + usuario + "es compatible con:");
-		algoritmo.pintarListaCompatibilidadOrdenada(usuario, ususariosCompatibles);
-		System.out.println("Los posibles ítems que le pueden gustar son:");
-		ArrayList<PorcentajeSimilitud> aux = algoritmo.pintarMatrizEstimacionOrdenada(usuario);
-		System.out.println("Los items asociados son");
-		conexionSQL.consutaItemsSegunId(aux);
-		System.out.println("Los restaurantes recomendados segun los ítems son:");
-		conexionSQL.consultaRestauranteSeunItem(aux);
-		
-	}
 
 
 
-	private static int seleccionaOpcion(String mensaje, String mensajeError) {
-		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
-		System.out.println(mensaje);
-		int opcion = 0;
-		boolean ok = false;
-		do {
-			try {
-				opcion = sc.nextInt();
-				ok=true;
-			} catch (InputMismatchException e) {
-				// TODO: handle exception
-				System.out.println(mensajeError);
-				sc.next();
-			}
-			
-		} while (!ok);
-		
-		return opcion ;
-	}
 
-
-
-	public AlgoritmoObj2(double[][] matriz, Integer filas, Integer columnas) { 
+	public Algoritmo(double[][] matriz, Integer filas, Integer columnas) { 
 		this.FILAS = filas;
 		this.COLUMNAS = columnas;
 		this.matriz = matriz;
@@ -139,21 +50,13 @@ public class AlgoritmoObj2 {
 	
 	
 	private void inicializaMatrizMSD() {
-		// TODO Auto-generated method stub
-		for (int u = 0; u < FILAS; u++) {
-			for (int i = 0; i < FILAS; i++) {
-				//System.out.println(matrizItemsComunes[u][i].get(2).toString());
+		for (int u = 0; u < FILAS; u++)
+			for (int i = 0; i < FILAS; i++) 
 				matrizMSD[u][i] = 0;
-			}
-			
-		}
-		
 	}
 	
 	
-	private  void obtencionDeItemsVotadosPorAmbosUsuarios() {
-		//inicializarMatizItemsComunes();
-		// TODO Auto-generated method stub
+	public void obtencionDeItemsVotadosPorAmbosUsuarios() {
 		for (int u = 0; u < FILAS; u++) {
 			for (int j = u+1; j < FILAS; j++) {
 				ArrayList<Integer> listaItem = new ArrayList<Integer>();
@@ -178,16 +81,12 @@ public class AlgoritmoObj2 {
 	
 		
 		private void inicializarMatizItemsComunes() { 
-			for (int u = 0; u < FILAS; u++) {
-				for (int i = 0; i < FILAS; i++) {
-					//System.out.println(matrizItemsComunes[u][i].get(2).toString());
-					matrizItemsComunes[u][i] = new ArrayList<Integer>(3);
-				}
-				
-			}
+			for (int u = 0; u < FILAS; u++) 
+				for (int i = 0; i < FILAS; i++) 
+					matrizItemsComunes[u][i] = new ArrayList<Integer>(3);		
 		}
 	
-		private void calculoMSD() {
+		public void calculoMSD() {
 			// TODO Auto-generated method stub
 			
 			int bxy = 0; //numero de items comunes
@@ -227,9 +126,7 @@ public class AlgoritmoObj2 {
 			}
 		}
 		
-		private void crearListaCompatibilidadOrdenada() {
-			// TODO Auto-generated method stub
-			
+		public void crearListaCompatibilidadOrdenada() {			
 			for (int u1 = 0; u1 < FILAS; u1++) {
 				ArrayList<PorcentajeSimilitud>porcentajeSimilituds = new ArrayList<PorcentajeSimilitud>();
 				for (int u2 = 0; u2 < FILAS; u2++) {
@@ -241,14 +138,9 @@ public class AlgoritmoObj2 {
 							porcentajeSimilituds.add(new PorcentajeSimilitud(u2,matrizMSD[u2][u1]));
 					}
 				}
-
-//				if (!porcentajeSimilituds.isEmpty()){
 					PorcentajeSimilitud [] array = porcentajeSimilituds.toArray(new PorcentajeSimilitud[porcentajeSimilituds.size()]);
 					Arrays.sort(array);
 					usuariosSimilaresOrdenados.add(array); 
-//				}
-				
-				//listaUsuariosCompatiblesOrdenados.add(array); 
 			}
 		}
 		
@@ -256,28 +148,17 @@ public class AlgoritmoObj2 {
 		
 		
 		
-		private void construirMatrizEstimacionOrdenada() {
-			// TODO Auto-generated method stub
+		public void construirMatrizEstimacionOrdenada() {
 			for (int i = 0; i < FILAS; i++) {
 				PorcentajeSimilitud usatioItem [];
 				usatioItem = new PorcentajeSimilitud [COLUMNAS];
 				for (int j = 0; j < COLUMNAS; j++) {
-					//usatioItem = new PorcentajeSimilitud(i, j);
-					
 					usatioItem [j] = new PorcentajeSimilitud(j, matrizEstimacion[i][j]);
-					
 				}
 				Arrays.sort(usatioItem);
 				matrizEstimacionOrdenada.add(usatioItem) ;
 			}
-			
-			
-			
 		}
-		
-		
-		
-		
 		
 		public void pintarListaCompatibilidadOrdenada() {
 			int i = 0;
@@ -290,33 +171,18 @@ public class AlgoritmoObj2 {
 			}	
 		}
 		
-//		public void pintarListaCompatibilidadOrdenada(int k) {
-//			int i = 0;
-//			for (PorcentajeSimilitud [] array: usuariosSimilaresOrdenados) {
-//				System.out.println("usuario: " + i);
-//				for (PorcentajeSimilitud porcentajeSimilitud : array) {
-//					System.out.println(porcentajeSimilitud.toString());
-//					k--;
-//					if (k==0);
-//						return;
-//				}
-//				i++;
-//			}	
-//		}
-		
 		
 	public void pintarListaCompatibilidadOrdenada(int usuarios, int kUsuariosCompatibles) {
 		PorcentajeSimilitud[] aux = usuariosSimilaresOrdenados.get(usuarios);
-		for (int i = 0; i < kUsuariosCompatibles; i++) {
+		for (int i = 0; i < kUsuariosCompatibles; i++) 
 			System.out.println(aux[i].toString());
-		}	
-}
+	}
 		
 		
 		/**
 		 * @return **********************/
 		
-		private double[][] construirMatrizEstimacionVotos(int K){
+	public double[][] construirMatrizEstimacionVotos(int K){
 			  matrizEstimacion = new double [FILAS][COLUMNAS];
 			
 			for (int i = 0; i < FILAS; i++) {
@@ -350,12 +216,6 @@ public class AlgoritmoObj2 {
 			}
 			return matrizEstimacion;
 		}
-		
-		
-//		/*Dado dos usuarios obtener el porcentaje de similitud entre ellos*/
-//		private double getSimilitud (int usuarioX, int usuarioY){
-//			return s.get(usuarioX)[usuarioY].getPorcentaje();
-//		}
 		
 		private double getPuntuacion (int usuario, int item){
 			return matriz[usuario][item];
@@ -403,8 +263,7 @@ public class AlgoritmoObj2 {
 			}
 		}
 		
-		private ArrayList<PorcentajeSimilitud> pintarMatrizEstimacionOrdenada(int usuario) {
-			// TODO Auto-generated method stub
+		public ArrayList<PorcentajeSimilitud> pintarMatrizEstimacionOrdenada(int usuario) {
 			PorcentajeSimilitud[] aux = matrizEstimacionOrdenada.get(usuario);
 			ArrayList<PorcentajeSimilitud> aux2 = new ArrayList<PorcentajeSimilitud>();
 			for (PorcentajeSimilitud array: aux) {
@@ -426,7 +285,6 @@ public class AlgoritmoObj2 {
 			double porcentaje =0;
 			
 			public PorcentajeSimilitud(int usuario_, double porcentaje_) {
-				// TODO Auto-generated constructor stub
 				usuario = usuario_;
 				porcentaje = porcentaje_;
 			}
@@ -441,8 +299,7 @@ public class AlgoritmoObj2 {
 			
 			@Override
 			public String toString() {
-			// TODO Auto-generated method stub
-			return "Usuario: " + Integer.toString(usuario)+ " " + Double.toString(porcentaje)+ " %";
+				return "Usuario: " + Integer.toString(usuario)+ " " + Double.toString(porcentaje)+ " %";
 			}
 
 			@Override
