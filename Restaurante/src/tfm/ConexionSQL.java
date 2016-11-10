@@ -8,6 +8,13 @@ import java.util.ArrayList;
 
 import tfm.Algoritmo.PorcentajeSimilitud;
 
+/**
+ * Clase encargada de conectar con la base de datos PosgreSQL y realizar
+ * determinadas consultas dependiento del metoso que se invoque
+ * 
+ * @author Usuario
+ *
+ */
 public class ConexionSQL {
 
 	private String cadenaConexion = "jdbc:postgresql://192.168.43.41:5432/postgres?"
@@ -16,19 +23,22 @@ public class ConexionSQL {
 	private Integer FILAS = 0;
 	private Integer COLUMNAS = 0;
 
-	public static void main(String[] arg) {
-		ConexionSQL conexionSQL = new ConexionSQL();
-		conexionSQL.conectar();
-	}
-
-	public void consultaRestauranteSeunItem(ArrayList<PorcentajeSimilitud> aux) {
+	/**
+	 * Metodo que realiza una consulta a la base de datos en busca de los
+	 * restaurantes asociados a una lista de ítems
+	 * 
+	 * @param listaDeItems
+	 *            lista de ítems que servirá para buscar restaurantes.
+	 */
+	public void consultaRestauranteSeunItem(
+			ArrayList<PorcentajeSimilitud> listaDeItems) {
 		Connection conexion = null;
 		Statement sentencia = null;
 		ResultSet resultado = null;
 
 		String a = "";
 		/* Sentencia whwere para encontrar los items asociados al id */
-		for (PorcentajeSimilitud porcentajeSimilitud : aux) {
+		for (PorcentajeSimilitud porcentajeSimilitud : listaDeItems) {
 			int n_item = porcentajeSimilitud.getUsuario();
 			a += "N=" + n_item + " OR ";
 		}
@@ -38,8 +48,9 @@ public class ConexionSQL {
 			Class.forName("org.postgresql.Driver");
 			conexion = DriverManager.getConnection(cadenaConexion);
 			sentencia = conexion.createStatement();
-			String consultaSQL = "SELECT * FROM ITEMS INNER JOIN RESTAURANTE_ITEMS USING (id_item) where "
-					+ a;
+			String consultaSQL = "SELECT * "
+					+ "FROM ITEMS INNER JOIN RESTAURANTE_ITEMS USING (id_item) "
+					+ "where " + a;
 
 			resultado = sentencia.executeQuery(consultaSQL);
 			while (resultado.next()) {
@@ -52,9 +63,12 @@ public class ConexionSQL {
 
 			}
 
+			resultado.close();
 			System.out.println("Ranking restaurantes recomendados: ");
-			consultaSQL = "SELECT id_restaurante, count(*) as COUNT FROM ITEMS INNER JOIN RESTAURANTE_ITEMS USING (id_item) where "
-					+ a + "group by id_restaurante order by count DESC";
+			consultaSQL = "SELECT id_restaurante, count(*) as COUNT "
+					+ "FROM ITEMS INNER JOIN RESTAURANTE_ITEMS USING (id_item) "
+					+ "where " + a
+					+ "group by id_restaurante order by count DESC";
 
 			resultado = sentencia.executeQuery(consultaSQL);
 			while (resultado.next()) {
@@ -94,13 +108,20 @@ public class ConexionSQL {
 		}
 	}
 
-	public void consutaItemsSegunId(ArrayList<PorcentajeSimilitud> aux) {
+	/**
+	 * Consultamos a la base de datos la lista de items por id y mostramos el
+	 * nombre asociado por pantalla
+	 * 
+	 * @param listaDeItems
+	 *            lista de ítems a consultar
+	 */
+	public void consutaItemsSegunId(ArrayList<PorcentajeSimilitud> listaDeItems) {
 		Connection conexion = null;
 		Statement sentencia = null;
 		ResultSet resultado = null;
 		String a = "";
 		/* Sentencia whwere para encontrar los items asociados al id */
-		for (PorcentajeSimilitud porcentajeSimilitud : aux) {
+		for (PorcentajeSimilitud porcentajeSimilitud : listaDeItems) {
 			int n_item = porcentajeSimilitud.getUsuario();
 			a += "N=" + n_item + " OR ";
 		}
@@ -147,7 +168,11 @@ public class ConexionSQL {
 		}
 	}
 
-	public void conectar() {
+	/**
+	 * Establecemos una coneccion a la base de datos y obtenemos la matriz de
+	 * entrada (usuarios e ítemes valorados por los mismos)
+	 */
+	public void obtenerMatrizDeEntrada() {
 		inicializarMatriz();
 		Connection conexion = null;
 		Statement sentencia = null;
@@ -156,13 +181,15 @@ public class ConexionSQL {
 			Class.forName("org.postgresql.Driver");
 			conexion = DriverManager.getConnection(cadenaConexion);
 			sentencia = conexion.createStatement();
-			String consultaSQL = "SELECT count (*) as N FROM  usuario_item_puntuacion";
+			String consultaSQL = "SELECT count (*) as N "
+					+ "FROM  usuario_item_puntuacion";
 
 			resultado = sentencia.executeQuery(consultaSQL);
 			while (resultado.next()) {
 				FILAS = resultado.getInt("N");
 			}
 
+			resultado.close();
 			consultaSQL = "SELECT count (*) as N FROM  items";
 			resultado = sentencia.executeQuery(consultaSQL);
 			while (resultado.next()) {
@@ -208,23 +235,45 @@ public class ConexionSQL {
 		}
 	}
 
+	/**
+	 * Inicializamos la matriz de entrada
+	 */
 	private void inicializarMatriz() {
-		for (int i = 0; i < FILAS; i++) {
-			for (int j = 0; j < COLUMNAS; j++) {
+		for (int i = 0; i < FILAS; i++)
+			for (int j = 0; j < COLUMNAS; j++)
 				MATRIZ[i][j] = -1;
-			}
-		}
 	}
 
+	/**
+	 * Obtenemos la matriz de entarda
+	 * 
+	 * @return matriz de entrada
+	 */
 	public double[][] getMATRIZ() {
 		return MATRIZ;
 	}
 
+	/**
+	 * Obtenemso el numero de filas de la matriz de entrada
+	 * 
+	 * @return numero de filas
+	 */
 	public Integer getFILAS() {
 		return FILAS;
 	}
 
+	/**
+	 * Obtenemso la cantida de columnas de la matriz de entradas
+	 * 
+	 * @return numero de columnas
+	 */
 	public Integer getCOLUMNAS() {
 		return COLUMNAS;
 	}
+
+	// public static void main(String[] arg) {
+	// ConexionSQL conexionSQL = new ConexionSQL();
+	// conexionSQL.conectar();
+	// }
+
 }

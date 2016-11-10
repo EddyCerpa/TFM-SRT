@@ -3,6 +3,13 @@ package tfm;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Clase que representa la implementacion del algortimo K-vecinos desarrollado
+ * para el TFM
+ * 
+ * @author Eddy Cuizaguana Cerpa
+ *
+ */
 public class Algoritmo {
 
 	private double[][] matriz;
@@ -15,13 +22,13 @@ public class Algoritmo {
 	static int FILAS = 6;
 	static int COLUMNAS = 12;
 
-	 public static double[][] matrizPrueba = {
-	 { 2, 3, -1, -1, 1, -1, 5, 1, -1, 4, 1, -1 },
-	 { 2, -1, 3, 5, -1, 2, 4, -1, 5, 2, 3, -1 },
-	 { 1, 3, -1, 5, -1, 4, -1, 2, -1, -1, -1, -1 },
-	 { 3, -1, 2, 3, -1, -1, 1, -1, 5, 3, -1, 1 },
-	 { 1, 1, 5, 1, 1, 3, 4, 5, 3, 1, 2, 1 },
-	 { -1, 2, 3, 1, -1, 3, -1, 2, -1, 4, -1, 5 } };
+	public static double[][] matrizPrueba = {
+			{ 2, 3, -1, -1, 1, -1, 5, 1, -1, 4, 1, -1 },
+			{ 2, -1, 3, 5, -1, 2, 4, -1, 5, 2, 3, -1 },
+			{ 1, 3, -1, 5, -1, 4, -1, 2, -1, -1, -1, -1 },
+			{ 3, -1, 2, 3, -1, -1, 1, -1, 5, 3, -1, 1 },
+			{ 1, 1, 5, 1, 1, 3, 4, 5, 3, 1, 2, 1 },
+			{ -1, 2, 3, 1, -1, 3, -1, 2, -1, 4, -1, 5 } };
 
 	/**
 	 * Constructora con argumentos

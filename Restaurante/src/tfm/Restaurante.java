@@ -9,6 +9,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Clase que representa un tipo de actividad "Restaurante" que ofrece TripAdvisor
+ * 
+ * @author Eddy Cuizaguana Cerpa
+ *
+ */
 
 public class Restaurante extends Ocio {
 	
@@ -118,8 +124,6 @@ public class Restaurante extends Ocio {
 		System.out.println("Descripcion: " + descripcion);
 		
 	}
-
-	
 	
 	@Override
 	protected void scan() {

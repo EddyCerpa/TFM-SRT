@@ -6,6 +6,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * Clase que representa un tipo de actividad "Vuelo" que ofrece TripAdvisor
+ * 
+ * @author Eddy Cuizaguana Cerpa
+ *
+ */
 public class Vuelo extends Ocio {
 
 	

@@ -7,13 +7,19 @@ import java.util.Scanner;
 
 import tfm.Algoritmo.PorcentajeSimilitud;
 
+/**
+ * Clase principal que ejecuta el proceso main
+ * 
+ * @author Eddy Cuizaguana Cerpa
+ *
+ */
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		System.out.println("Inicio");
 
 		ConexionSQL conexionSQL = new ConexionSQL();
-		// conexionSQL.conectar();
+		// conexionSQL.obtenerMatrizDeEntrada();
 		// double[][] matriz = conexionSQL.getMATRIZ();
 		// Algoritmo algoritmo = new Algoritmo(matriz, conexionSQL.getFILAS(),
 		// conexionSQL.getCOLUMNAS());
@@ -33,7 +39,7 @@ public class Main {
 		// cantidad de usarios con los que se quiere estimar
 		int u = Algoritmo.FILAS - 1;
 		algoritmo.construirMatrizEstimacionVotos(u);
-		
+
 		algoritmo.construirMatrizEstimacionOrdenada();
 
 		menu(algoritmo, conexionSQL);

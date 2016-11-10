@@ -6,64 +6,60 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class AlquilerVacacional extends Ocio{
+/**
+ * Clase que representa un tipo de actividad "Alquiler vacional" que ofrece
+ * TripAdvisor
+ * 
+ * @author Eddy Cuizaguana Cerpa
+ *
+ */
 
+public class AlquilerVacacional extends Ocio {
+
+	/**
+	 * Constructora con argumentos
+	 * 
+	 * @param doc_
+	 *            fichero del cual se extraerá la información
+	 * @param tIPO
+	 *            indica el tipo de ocio (vuelos, restaurantes, hoteles,
+	 *            alquilevr vacacional)
+	 * @param nOMBRE
+	 *            nombre del empresa
+	 */
 	public AlquilerVacacional(Document doc_, String tIPO, String nOMBRE) {
-		// TODO Auto-generated constructor stub
 		doc = doc_;
 		tipo = tIPO;
 		nombre = nOMBRE;
-		
 		usuarios = new ArrayList<Usuario>();
 		comentarios = new ArrayList<Comentario>();
 	}
 
 	@Override
 	protected void scan() {
-		// TODO Auto-generated method stub
-		
-
-		Elements informacion = doc.select("div.deckB.review_collection div.reviewSelector  ");//reviewSelector
-		
-		
-		
-		
-		int i=0;
-		for (Element info: informacion){
-			
+		Elements informacion = doc
+				.select("div.deckB.review_collection div.reviewSelector  ");
+		for (Element info : informacion) {
 			System.out.println("--------------------------------------");
-			Elements informaciónUsuarios =info.select("div.vrrmReviewScroller"); // solo para Alquiler Vacacional
-			
-			
+			Elements informaciónUsuarios = info
+					.select("div.vrrmReviewScroller");
 			obtenerListaUsuarios(informaciónUsuarios);
 			obtenerListaComentarios(info);
-			
-			i++;
 		}
-		
-//		Elements informacionRestaurante = doc.select("div.dynamicBottom div.details_tab div.table_section div.row");
-//		
-//		System.out.println("comentarios:" + i);
-		
-		
+
 	}
 
 	@Override
 	protected void obtenerCaracteristica(Elements informaciónUsuarios) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void mostrarCaracteristicas() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	protected void guardarEnCsv(String nombre) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
