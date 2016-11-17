@@ -150,7 +150,7 @@ public class Restaurante extends Ocio {
 	@Override
 	protected void guardarEnCsv(String nombre) {
 			
-			String csvFile = "M:\\CSVS_TEST\\"+nombre+tipo+"_"+this.nombre+".csv";
+			String csvFile = "E:\\A\\"+nombre+tipo+"_"+this.nombre+".csv";
 	        FileWriter writer = null;
 			try {
 				writer = new FileWriter(csvFile.replace("&", "").replace("\"", ""));

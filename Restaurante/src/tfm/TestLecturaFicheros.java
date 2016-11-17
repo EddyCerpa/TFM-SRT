@@ -17,7 +17,7 @@ public class TestLecturaFicheros {
 	public static void main(String[] args) {
 		// String sDirectorio = "M:\\PruebaLetura";
 		// String sDirectorio = "G:\\MIX";
-		String sDirectorio = "M:\\TEST";
+		String sDirectorio = "E:\\z";
 		Document doc = null;
 
 		File f = new File(sDirectorio);
